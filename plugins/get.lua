@@ -1,5 +1,5 @@
 local function get_variables_hash(msg)
-  if msg.to.type == 'chat' then
+  if msg.to.type == 'chat' or msg.to.type == 'channel' then
     return 'chat:'..msg.to.id..':variables'
   end
 end 
@@ -11,13 +11,13 @@ local function get_value(msg, var_name)
     if not value then
       return
     else
-      return var_name..' :\n'..value
+      return '\n'..value
     end
   end
 end
 
 local function run(msg, matches)
-  if not is_momod(msg) then -- only for mods,owner and admins
+  if not (msg) then -- only for mods,owner and admins
     return 
   end
   if matches[2] then
@@ -31,7 +31,7 @@ end
 
 return {
   patterns = {
-    "^([!/]get) (.+)$"
+    "^([#!/])(.+)$"
   },
   run = run
 }
